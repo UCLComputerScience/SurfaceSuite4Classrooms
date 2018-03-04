@@ -1,0 +1,111 @@
+<%- include ../layouts/header.ejs %> 
+  <style>
+    body {
+      padding-top: 50px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 51px;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      /* Scrollable contents if viewport is shorter than content. */
+      border-right: 1px solid #eee;
+    }
+
+    .placeholders {
+      padding-bottom: 3rem;
+    }
+
+    .placeholder img {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-light fixed-top bg-inverse" style="background-color: #e3f2fd;">
+    <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">Dashboard</a>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <li>
+            <a class="nav-link" href="/startgame">Start New Game</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Manage
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Help</a>
+          </li>
+      </ul>
+    </div>
+  </nav>
+  </br>
+  <div class="container-fluid">
+    <div class="row">
+
+      <main class="col-sm-10 offset-sm-1">
+        <h1>Dashboard</h1>
+
+        <section class="row text-center placeholders">
+          <div class="col-6 col-sm-4 placeholder">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle"
+              alt="Generic placeholder thumbnail">
+            <h4>Label</h4>
+            <div class="text-muted">Something else</div>
+          </div>
+          <div class="col-6 col-sm-4 placeholder">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle"
+              alt="Generic placeholder thumbnail">
+            <h4>Label</h4>
+            <span class="text-muted">Something else</span>
+          </div>
+          <div class="col-6 col-sm-4 placeholder">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle"
+              alt="Generic placeholder thumbnail">
+            <h4>Label</h4>
+            <span class="text-muted">Something else</span>
+          </div>
+
+        </section>
+
+        <h2>Students</h2>
+        <div class="table-responsive">
+          
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+    crossorigin="anonymous"></script>
+  <script>
+    window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
