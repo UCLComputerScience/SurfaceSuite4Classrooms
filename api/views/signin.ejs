@@ -1,28 +1,24 @@
 <%- include ../layouts/header.ejs %>
-</head>
+<!-- Material form login -->
+<form>
+    <p class="h4 text-center mb-4">Sign in</p>
 
-<body style="padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;">
-  <div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
-      <form class="form-signin" action="team">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+    <!-- Material input email -->
+    <div class="md-form">
+        <i class="fa fa-envelope prefix grey-text"></i>
+        <input type="email" id="materialFormLoginEmailEx" class="form-control">
+        <label for="materialFormLoginEmailEx">Your email</label>
     </div>
-    <div class="col-sm-4"></div>
-  </div>
-</body>
 
-</html>
+    <!-- Material input password -->
+    <div class="md-form">
+        <i class="fa fa-lock prefix grey-text"></i>
+        <input type="password" id="materialFormLoginPasswordEx" class="form-control">
+        <label for="materialFormLoginPasswordEx">Your password</label>
+    </div>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-default" type="submit">Login</button>
+    </div>
+</form>
+<!-- Material form login -->
