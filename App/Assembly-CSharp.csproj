@@ -46,18 +46,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Assets\Scripts\BehaviourScript.cs" />
-     <Compile Include="Assets\Assets\Scripts\BoxTrigger.cs" />
-     <Compile Include="Assets\Assets\Scripts\DragHandeler.cs" />
-     <Compile Include="Assets\Assets\Scripts\DragHandle.cs" />
-     <Compile Include="Assets\Assets\Scripts\LoadFromJson.cs" />
-     <Compile Include="Assets\Assets\Scripts\Main_Menu.cs" />
-     <Compile Include="Assets\Assets\Scripts\Multi_Touch.cs" />
-     <Compile Include="Assets\Assets\Scripts\SlotScript.cs" />
-     <Compile Include="Assets\Assets\Scripts\Slots.cs" />
-     <Compile Include="Assets\Assets\Scripts\SubmitToMenu.cs" />
-     <Compile Include="Assets\Assets\Scripts\Timer.cs" />
-     <Compile Include="Assets\Assets\Scripts\submit_Script.cs" />
+     <Compile Include="Assets\Scripts\BehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\BoxTrigger.cs" />
+     <Compile Include="Assets\Scripts\Button_D.cs" />
+     <Compile Include="Assets\Scripts\Button_L.cs" />
+     <Compile Include="Assets\Scripts\Button_R.cs" />
+     <Compile Include="Assets\Scripts\Button_U.cs" />
+     <Compile Include="Assets\Scripts\DragScript.cs" />
+     <Compile Include="Assets\Scripts\DynamicScene.cs" />
+     <Compile Include="Assets\Scripts\Main_Menu.cs" />
+     <Compile Include="Assets\Scripts\Scene_Manager.cs" />
+     <Compile Include="Assets\Scripts\SubmitToMenu.cs" />
+     <Compile Include="Assets\Scripts\Timer.cs" />
+     <Compile Include="Assets\Scripts\Workings\Multi_Touch.cs" />
+     <Compile Include="Assets\Scripts\submit_Script.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
