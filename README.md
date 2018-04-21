@@ -1,6 +1,6 @@
 # 10th Anniversary Surface Libraries (Demonstration application)
 
-* Microsoft Student Sponsorship Program *
+/Microsoft Student Sponsorship Program/
 
 ## Project to create the Surface Suite for Classrooms. An interactive learning game on the Surface Table platform utilizing the Surface Studio for data analysis.
 
