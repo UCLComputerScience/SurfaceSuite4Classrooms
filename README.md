@@ -1,5 +1,6 @@
 # 10th Anniversary Surface Libraries (Demonstration application)
-===
+***
+
 _Microsoft Student Sponsorship Program_
 
 ## Project to create the Surface Suite for Classrooms. An interactive learning game on the Surface Table platform utilizing the Surface Studio for data analysis.
@@ -8,7 +9,7 @@ By:
 Adam Peace
 Prashan Karunakaran
 Zuka Murvanidze
----
+
 ## Project Background
 We were initially assigned by UCL to the ‘UCL CS surface studio and surface table project’, which with further refinements we became the Table-Tablet team at UCL and we are introducing to you our 10th Anniversary Microsoft Surface Libraries. With the celebration of the 10th Anniversary of the Surface Suite line of products at Microsoft upon us, we may tend to look towards the current technologies that are at the forefront of technological advancements such as the Microsoft Surface Studio as well as technologies for instance that integrate cognitive services. Often it is easy to overlook how far the technology has come and how old technology is still very viable in the current day. At the origin of the Surface product line is the Microsoft Surface Table, which introduced the world to multi-touch on a much more functional level making use of a variety of innovative gestures and controls where 10 years on the hardware is still reliable in this day and age.
 
