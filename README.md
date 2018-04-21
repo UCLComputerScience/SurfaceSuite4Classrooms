@@ -1,4 +1,4 @@
-# COMP103P Project
+# 10th Anniversary Surface Libraries (Demonstration application)
 
 # Microsoft Student Sponsorship Program
 
