@@ -1,0 +1,39 @@
+<h2 style="padding:0.25em; padding-top:0.5em">Select Words</h2>
+<div class="table-responsive">
+  <% if (definitions.length != 0) {%>
+    <table class="table table-striped">
+      <thead class="blue-grey lighten-2">
+        <tr>
+          <th>Word</th>
+          <th>Meaning</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <!-- Display all users -->
+      <tbody>
+        <div class="btn-group mr-4" data-toggle="buttons">
+          <% definitions.forEach(function(definition){ %>
+            <tr>
+              <td class="align-middle text-capatalize">
+                <%= definition.word %>
+              </td>
+              <td class="align-middle text-capatalize">
+                <%= definition.meaning %>
+              </td>
+              <td></td>
+              <td>
+                <label class="btn btn-primary form-check-label">
+                  <input style="align-items: center" type="checkbox" name="definitions[]" value="<%=definition.definition_id%>" class="form-check-input" autocomplete="off">Select</label>
+              </td>
+            </tr>
+        </div>
+        <% })} else { %>
+          <div class="card bg-danger text-white">
+            <div class="card-body">No definitions found</div>
+          </div>
+          <% } %>
+
+      </tbody>
+    </table>
+</div>

@@ -1,0 +1,26 @@
+<% include ../layouts/header.ejs %>
+
+  <body style="overflow: hidden">
+    <!-- hidden -->
+    <nav class="navbar navbar-expand-md navbar-dark info-color-dark"> <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div> <a class="navbar-brand" href="/"><img src="/icon.png" alt="" height="30" class="d-inline-block align-top"> Surface Suite for Classrooms</a> </div>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <li> <a class="nav-link" href="/">Dashboard</a> </li>
+            <li class="nav-item">
+              <li> <a class="nav-link active" href="/dashboard/startgame">Start New Game</a> </li>
+              <li> <a class="nav-link" href="/dashboard/definitions">Definitions</a> </li>
+        </ul>
+      </div>
+    </nav>
+    <br>
+    <div style="margin-top:25%">
+      <h1 align="center" style="font-size:5em">Game Started</h1>
+    </div>
+    <% include ../layouts/footer.ejs %>
+  </body>
+
+  </html>

@@ -1,0 +1,56 @@
+<div class="card">
+  <h2 style="padding:0.25em; padding-top:0.5em">Definitions</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="blue-grey lighten-2">
+        <tr>
+          <th>Word</th>
+          <th>Meaning</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <!-- Display all users -->
+      <tbody>
+        <% if (definitions.length != 0) {%>
+
+          <% definitions.forEach(function(definition){ %>
+            <tr>
+              <td class="align-middle text-capatalize">
+                <%= definition.word %>
+              </td>
+              <td class="align-middle text-capatalize">
+                <%= definition.meaning %>
+              </td>
+              <td>
+              </td>
+              <td>
+                <div align="center">
+                  <a role="button" href="/dashboard/definition/delete/<%=definition.definition_id%>" method="get" class="btn btn-danger">Delete</a></div>
+              </td>
+  </div>
+  </tr>
+  <% })} else { %>
+    <div class="card bg-danger text-white">
+      <div class="card-body">No definitions found</div>
+    </div>
+    <% } %>
+      <!-- New User Entry -->
+      <form action="/dashboard/definitions" class="form-inline" method="post" name="form1">
+        <td>
+          <div class="md-form form-lg"><input type="text" style="margin-top:0px" id="inputLGEx" class="form-control form-control-lg" placeholder="Word" name="word" value="<%= word %>"></div>
+
+        </td>
+        <td>
+          <div class="md-form form-lg"><input type="text" style="margin-top:0px" id="inputLGEx" class="form-control form-control-lg" placeholder="Meaning" name="meaning" value="<%= meaning %>"></div>
+        </td>
+        <td></td>
+        <td>
+          <div align="center"><button style="height:55px; width:120px; margin-top:12px;" class="btn btn-success" type="submit" value="Add">Add</button></div>
+        </td>
+
+      </form>
+      </tbody>
+      </table>
+</div>
+</div>
