@@ -7,11 +7,16 @@ app.get('/', function (req, res) {
   res.json('Sample request received')
 })
 
-
 app.get('/info', function (req, res, next) {
-  //app.locals.toTable = { "student1": "Dean Mohamedally", "student2": "Zuka Murvanidze", "student3": "Prashan Karunakaran", "student4": "Adam Peace", "definition1": "What animal goes oink?", "definition2": "What animal goes meow?", "definition3": "What animal goes moo?", "definition4": "What animal goes neigh?", "answer1": "pig", "answer2": "cat", "answer3": "cow", "answer4": "horse", "id":[48, 49, 50, 51]}
-  console.log('served info')
+  //Structure: app.locals.toTable = { "student1": "studentname", "student2": "studentname", "student3": "studentname", "student4": "studentname", "definition1": "definitionbody", "definition2": "definitionbody", "definition3": "definitionbody", "definition4": "definitionbody", "answer1": "answerbody", "answer2": "answerbody", "answer3": "answerbody", "answer4": "answerbody", "id":[1, 2, 3, 4]}
+  console.log('Served info with length', app.locals.toTable.length)
   res.json(app.locals.toTable)
+})
+
+app.get('/edit', function (req, res, next) {
+  app.locals.toTable = []
+  console.log('Wiped toTable')
+  res.json('toTable var wiped')
 
 })
 
@@ -32,7 +37,6 @@ app.post('/edit/(:student_id)', function (req, res, next) {
     console.log(errors[0].msg + ' for dashboard/show/ route')
     res.json(errors[0].msg)
   }
-  app.locals.toTable = []
 })
 
 module.exports = app
