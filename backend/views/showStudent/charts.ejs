@@ -1,0 +1,36 @@
+<script>
+  var scores = <%-scores%>;
+  var score_times = <%-score_times%>;
+  var ctx = document.getElementById("chartjs_line").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: score_times,
+      datasets: [{
+        label: 'Score',
+        data: scores,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        xAxes: [{
+          type: 'time',
+          time: {
+            displayFormats: {
+              quarter: 'MMM YYYY'
+            }
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            max: 100
+          }
+        }]
+      }
+    }
+  });
+</script>

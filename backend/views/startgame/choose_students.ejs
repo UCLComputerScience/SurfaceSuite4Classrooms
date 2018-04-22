@@ -1,0 +1,42 @@
+<h2 style="padding:0.25em; padding-top:0.5em">Select Students</h2><br>
+<div class="table-responsive">
+  <% if (students.length != 0) {%>
+    <table class="table table-striped">
+      <thead class="blue-grey lighten-2">
+        <tr>
+          <th>Surname</th>
+          <th>First Name</th>
+          <th>Score</th>
+          <th></th>
+        </tr>
+      </thead>
+      <!-- Display all users -->
+      <tbody>
+        <% students.forEach(function(student){ %>
+          <tr>
+            <td class="align-middle text-capatalize">
+              <%= student.first_name %>
+            </td>
+            <td class="align-middle text-capatalize">
+              <%= student.last_name %>
+            </td>
+            <td class="align-middle text-capatalize">
+              <%if (JSON.parse(student.scores).length != 0) {%>
+              <%= Math.floor((JSON.parse(student.scores).reduce((previous, current) => current += previous)) / (JSON.parse(student.scores).length));%>
+              <%} else {%>
+              <%= '--'%>
+              <%}%>
+            </td>
+          <td>
+            <label class="btn btn-primary form-check-label">
+              <input type="checkbox" name="students[]" value="<%=student.student_id%>" class="form-check-input" autocomplete="off">Select</label>
+          </td>
+          </tr>
+          <% })} else { %>
+            <div class="card bg-danger text-white">
+              <div class="card-body">No students found</div>
+            </div>
+          <% } %>
+      </tbody>
+    </table>
+</div>

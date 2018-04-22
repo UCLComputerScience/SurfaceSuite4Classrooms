@@ -1,0 +1,74 @@
+<script>
+  var rows = <%-JSON.stringify(data)%>;
+  var scores = [];
+  var names = [];
+  rows.forEach(function(student) {
+    var score = 0;
+    if (JSON.parse(student.scores) != null) {
+      for (var item in JSON.parse(student.scores)) {
+        score += JSON.parse(student.scores)[item];
+      }
+      score = Math.floor(score / JSON.parse(student.scores).length);
+      scores.push(score);
+      names.push(student.first_name);
+    }
+  });
+  var ctx = document.getElementById("chartjs-bar").getContext('2d');
+  var myBarChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      labels: names,
+      datasets: [{
+        label: 'Average Score',
+        data: scores,
+        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+        borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            beginAtZero: true,
+            max:100
+          },
+
+        }]
+      }
+    }
+  });
+</script>
+<script>
+  var ctx = document.getElementById("chartjs-line").getContext('2d');
+  var myDonutChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: names,
+      datasets: [{
+        label: 'Score',
+        data: scores,
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }],
+        xAxes: [{
+          maxValue:100
+        }]
+      }
+    }
+  });
+</script>
