@@ -16,9 +16,9 @@
     </div>
     </nav>
     </br>
-    <div class="animated fadeIn">
+    <div <%if (notification.length == 0) {%>class="animated fadeIn"<%}%>>
       <form method="post">
-      <h1 style="margin-left:15px; font-size:50px">Start Game</h1>
+      <div class="row"><div class="col-sm-9"><h1 style="margin-left:15px; font-size:50px">Start Game</h1></div><div class="col-sm-2"><% include ../layouts/notification.ejs%></div><div class="col-sm-1"></div></div>
       <div class="row">
         <div class="col-sm-1"></div>
 

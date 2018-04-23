@@ -65,10 +65,9 @@ app.get('/show/(:student_id)', function (req, res, next) {
 				function (err, rows, fields) {
 					if (err) throw (err)
 					if (rows.length <= 0) {
-						console.log('ERROR: No student found with id:', req.params.student_id)
-						res.redirect('/dashboard')
+						var msg = encodeURIComponent('No user found with that ID')
+						res.redirect('/dashboard/?msg=' + msg)
 					} else {
-						console.log('Served show for student:', req.params.student_id)
 						if (JSON.parse(rows[0].scores).length != 0) {
 							var avg = Math.floor((JSON.parse(rows[0].scores).reduce((previous, current) => current += previous)) / (JSON.parse(rows[0].scores).length))
 						} else {
@@ -88,11 +87,9 @@ app.get('/show/(:student_id)', function (req, res, next) {
 				})
 		})
 	} else {
-		console.log(errors[0].msg + ' for dashboard/show/ route')
 		var msg = encodeURIComponent(errors[0].msg)
 		res.redirect('/dashboard/?msg=' + msg)
 	}
-
 })
 
 // Delete Student by id
@@ -102,18 +99,11 @@ app.get('/student/delete/(:student_id)', function (req, res, next) {
 	if (!errors) {
 		req.getConnection(function (error, conn) {
 			conn.query('DELETE FROM student WHERE student_id = ' + req.params.student_id, function (err, result) {
-				//if(err) throw err
-				if (err) {
-					console.log('ERROR:', err)
-					res.redirect('/dashboard')
-				} else {
-					console.log('Student with student_id:', req.params.student_id, 'removed')
-					res.redirect('/dashboard/?msg=' + 201)
-				}
+				if(err) throw err
+				res.redirect('/dashboard/?msg=' + 201)
 			})
 		})
 	} else {
-		console.log(errors[0].msg + ' for dashboard/show/ route')
 		var msg = encodeURIComponent(errors[0].msg)
 		res.redirect('/dashboard/?msg=' + msg)
 	}
@@ -126,8 +116,6 @@ app.get('/student/delete/(:student_id)', function (req, res, next) {
 app.get('/definition', function (req, res, next) {
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM definition ORDER BY word ASC', function (err, rows, fields) {
-			if (err) console.log(err)
-			console.log('Served Definitions with ', rows.length, ' rows')
 			if (err) throw err
 			var msg = []
 			if (req.query.msg) msg = [req.query.msg]
@@ -187,63 +175,57 @@ app.get('/definition/delete/(:definition_id)', function (req, res, next) {
 app.get('/startgame', function (req, res, next) {
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM student ORDER BY last_name ASC', function (err, rows, fields) {
-			if (err) {
-				console.log('ERROR:', err)
+			if (err) throw err
+			var students = rows
+			conn.query('SELECT * FROM definition ORDER BY word ASC', function (err, rows, fields) {
+				if (err) throw err
+				var msg = []
+				if (req.query.msg) msg = [req.query.msg]
 				res.render('startgame', {
-					students: '',
-					definitions: '',
+					notification: msg,
+					students: students,
+					definitions: rows,
 				})
-			} else {
-				var students = rows
-				conn.query('SELECT * FROM definition ORDER BY word ASC', function (err, rows, fields) {
-					console.log('Served startgame with', rows.length, 'definitions and', students.length, 'students')
-					if (err) {
-						console.log('ERROR:', err)
-						res.render('startgame', {
-							students: students,
-							definitions: '',
-						})
-					} else {
-						res.render('startgame', {
-							students: students,
-							definitions: rows,
-						})
-					}
-				})
-			}
+			})
 		})
 	})
 })
 
 app.post('/startgame', function (req, res, next) {
-	console.log(app.locals.toTable)
-	app.locals.toTable = {}
-	req.getConnection(function (error, conn) {
-			conn.query('SELECT * FROM definition;', function (err, rows, fields) {
-        if (err) throw (err)
-				for (var i=0, j=1; i<rows.length; i++) {
-					if (req.body.definitions.includes(rows[i].definition_id.toString())) {
-						var meaning = 'definition' + j
-						var word = 'answer' + j
-						app.locals.toTable[meaning] = rows[i].meaning
-						app.locals.toTable[word] = rows[i].word
-						j++
-					}
-				}
-      })
-			conn.query('SELECT student_id, first_name, last_name FROM student;', function (err, rows, fields) {
-        if (err) throw (err)
-				app.locals.toTable['id'] = []
-				for (var i=0, j=1; i<rows.length; i++) {
-					if (req.body.students.includes(rows[i].student_id.toString())) {
-						var target = 'student' + j
-						app.locals.toTable[target] = rows[i].first_name + ' ' + rows[i].last_name
-						app.locals.toTable['id'].push(rows[i].student_id)
-						j++
-					}
-				}
-      })
-	})
-	res.render('ingame')
+	if (req.body.definitions && req.body.students) {
+		if (req.body.definitions.length == 4 && req.body.students.length == 4) {
+			app.locals.toTable = {}
+			req.getConnection(function (error, conn) {
+					conn.query('SELECT * FROM definition;', function (err, rows, fields) {
+		        if (err) throw (err)
+						for (var i=0, j=1; i<rows.length; i++) {
+							if (req.body.definitions.includes(rows[i].definition_id.toString())) {
+								var meaning = 'definition' + j
+								var word = 'answer' + j
+								app.locals.toTable[meaning] = rows[i].meaning
+								app.locals.toTable[word] = rows[i].word
+								j++
+							}
+						}
+		      })
+					conn.query('SELECT student_id, first_name, last_name FROM student;', function (err, rows, fields) {
+		        if (err) throw (err)
+						app.locals.toTable['id'] = []
+						for (var i=0, j=1; i<rows.length; i++) {
+							if (req.body.students.includes(rows[i].student_id.toString())) {
+								var target = 'student' + j
+								app.locals.toTable[target] = rows[i].first_name + ' ' + rows[i].last_name
+								app.locals.toTable['id'].push(rows[i].student_id)
+								j++
+							}
+						}
+		      })
+			})
+			res.render('ingame')
+		}
+	}
+	var msg = encodeURIComponent('You must choose 4 Students and Words')
+	res.redirect('/dashboard/startgame/?msg=' + msg)
+
 })
 module.exports = app
