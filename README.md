@@ -3,6 +3,18 @@
 
 *Microsoft Student Sponsorship Program*
 
+To use backend, open the command line and type:
+
+`git clone https://github.com/UCLComputerScience/project_52.git`
+
+`cd project_52/backend`
+
+`npm install`
+
+`nodemon`
+
+
+
 ## Project to create the Surface Suite for Classrooms. An interactive learning game on the Surface Table platform utilizing the Surface Studio for data analysis.
 
 By:
