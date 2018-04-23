@@ -11,8 +11,8 @@ app.get('/', function (req, res, next) {
 		conn.query('SELECT * FROM student ORDER BY last_name ASC', function (err, rows, fields) {
 			if (err) throw err
 			res.render('dashboard', {
+				notification: ['hello'],
 				data: rows,
-				notification: [],
 				first_name: '',
 				last_name: '',
 			})
@@ -28,11 +28,9 @@ app.get('/ingame', function (req, res, next) {
 
 // Add new post
 app.post('/', function (req, res, next) {
-	req.assert('first_name', 'Name is required').isAlpha() //Validate first_name
-	req.assert('last_name', 'Surname is required').isAlpha() //Validate last_name
-
+	req.assert('first_name', 'Forename is invalid').isAlpha().isLength({min:1, max:20}) //Validate first_name
+	req.assert('last_name', 'Surname is invalid').isAlpha().isLength({min:1, max:20}) //Validate last_name
 	var errors = req.validationErrors()
-
 	if (!errors) { //No errors were found.  Passed Validation!
 		var student = {
 			first_name: req.sanitize('first_name').escape().trim(),
@@ -125,10 +123,10 @@ app.get('/definitions', function (req, res, next) {
 			console.log('Served Definitions with ', rows.length, ' rows')
 			if (err) throw err
 			res.render('definitions', {
+				notification: [],
 				definitions: rows,
 				word: '',
 				meaning: '',
-				notification: [],
 			})
 		})
 	})

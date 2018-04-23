@@ -72,6 +72,15 @@ app.use('/', index)
 app.use('/dashboard', host)
 app.use('/client', client)
 
+app.use((req, res, next) => {
+  res.status(404).send("Turn around now! Nothing exists under this URL")
+})
+
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
+
 const port = 3000
 app.listen(port, function () {
 	console.log('Server running at http://localhost:'+port)
