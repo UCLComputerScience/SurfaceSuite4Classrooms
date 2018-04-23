@@ -3,6 +3,18 @@
 
 *Microsoft Student Sponsorship Program*
 
+To use backend, open the command line and type:
+
+`git clone https://github.com/UCLComputerScience/project_52.git`
+
+`cd project_52/backend`
+
+`npm install`
+
+`nodemon`
+
+
+
 ## Project to create the Surface Suite for Classrooms. An interactive learning game on the Surface Table platform utilizing the Surface Studio for data analysis.
 
 By:
@@ -38,4 +50,3 @@ Create a front end and back end that has the required functionalities, such that
 ---
 ### Universally usable Back End:
 We aim to create a Back End and a set of libraries that are open sourced which allow for anybody to develop systems using the back end framework that we have put in place.	This adapts the SMART framework when we give it the following constraints. Our goal is to create a set of open source libraries that will be made available through GitHub such that the code and methods provided will allow a typical user will be able to create a Table - Tablet hybrid system with the back end that we provide, once again complete by the overall given deadline of the project.	
-
