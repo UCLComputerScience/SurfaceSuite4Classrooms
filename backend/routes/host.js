@@ -10,21 +10,17 @@ app.get('/', function (req, res, next) {
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM student ORDER BY last_name ASC', function (err, rows, fields) {
 			if (err) throw err
+			var msg = []
+			if (req.query.msg) msg = [req.query.msg]
 			res.render('dashboard', {
-				notification: ['hello'],
+				notification: msg,
 				data: rows,
 				first_name: '',
 				last_name: '',
 			})
-			console.log('Served Dashboard with', rows.length, 'rows')
 		})
 	})
 })
-
-app.get('/ingame', function (req, res, next) {
-	res.render('ingame')
-})
-
 
 // Add new post
 app.post('/', function (req, res, next) {
@@ -33,8 +29,8 @@ app.post('/', function (req, res, next) {
 	var errors = req.validationErrors()
 	if (!errors) { //No errors were found.  Passed Validation!
 		var student = {
-			first_name: req.sanitize('first_name').escape().trim(),
-			last_name: req.sanitize('last_name').escape().trim(),
+			first_name: req.sanitize('first_name').escape().trim().toLowerCase(),
+			last_name: req.sanitize('last_name').escape().trim().toLowerCase(),
 			scores: '[]',
 			score_times: '[]'
 		}
@@ -47,10 +43,13 @@ app.post('/', function (req, res, next) {
 				}
 			})
 		})
+		res.redirect('/dashboard/?msg=' + 200)
 	} else {
 		console.log('ERROR:', errors)
+		var msg = encodeURIComponent(errors[0].msg)
+		res.redirect('/dashboard/?msg=' + msg)
 	}
-	res.redirect('/dashboard')
+
 })
 
 // -------------------- PER STUDENTS -------------------- //
@@ -58,7 +57,7 @@ app.post('/', function (req, res, next) {
 // Get student by id
 
 app.get('/show/(:student_id)', function (req, res, next) {
-	//req.checkParams('Invalid Student ID').isFloat()
+	req.checkParams('student_id', 'student_id must be a number').isDecimal();
 	var errors = req.validationErrors()
 	if (!errors) {
 		req.getConnection(function (error, conn) {
@@ -90,40 +89,50 @@ app.get('/show/(:student_id)', function (req, res, next) {
 		})
 	} else {
 		console.log(errors[0].msg + ' for dashboard/show/ route')
-		res.json(errors[0].msg)
+		var msg = encodeURIComponent(errors[0].msg)
+		res.redirect('/dashboard/?msg=' + msg)
 	}
 
 })
 
 // Delete Student by id
 app.get('/student/delete/(:student_id)', function (req, res, next) {
-	console.log("Deleted user", req.params.student_id)
-	req.getConnection(function (error, conn) {
-		conn.query('DELETE FROM student WHERE student_id = ' + req.params.student_id, function (err, result) {
-			//if(err) throw err
-			if (err) {
-				console.log('ERROR:', err)
-				res.redirect('/dasboard')
-			} else {
-				console.log('Student with student_id:', req.params.student_id, 'removed')
-				res.redirect('/dashboard')
-			}
+	req.checkParams('student_id', 'student_id must be a number').isDecimal();
+	var errors = req.validationErrors()
+	if (!errors) {
+		req.getConnection(function (error, conn) {
+			conn.query('DELETE FROM student WHERE student_id = ' + req.params.student_id, function (err, result) {
+				//if(err) throw err
+				if (err) {
+					console.log('ERROR:', err)
+					res.redirect('/dashboard')
+				} else {
+					console.log('Student with student_id:', req.params.student_id, 'removed')
+					res.redirect('/dashboard/?msg=' + 201)
+				}
+			})
 		})
-	})
+	} else {
+		console.log(errors[0].msg + ' for dashboard/show/ route')
+		var msg = encodeURIComponent(errors[0].msg)
+		res.redirect('/dashboard/?msg=' + msg)
+	}
 })
 
 // -------------------- ALL DEFINITIONS -------------------- //
 
 // Get all definitions
 
-app.get('/definitions', function (req, res, next) {
+app.get('/definition', function (req, res, next) {
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM definition ORDER BY word ASC', function (err, rows, fields) {
 			if (err) console.log(err)
 			console.log('Served Definitions with ', rows.length, ' rows')
 			if (err) throw err
+			var msg = []
+			if (req.query.msg) msg = [req.query.msg]
 			res.render('definitions', {
-				notification: [],
+				notification: msg,
 				definitions: rows,
 				word: '',
 				meaning: '',
@@ -134,9 +143,9 @@ app.get('/definitions', function (req, res, next) {
 
 // Add new definition
 
-app.post('/definitions', function (req, res, next) {
-	req.assert('word', 'Name is required').notEmpty()
-	req.assert('meaning', 'Surname is required').notEmpty()
+app.post('/definition', function (req, res, next) {
+	req.assert('word', 'Word is invalid (<9 chars)').isAlpha().isLength({min:1, max:9})
+	req.assert('meaning', 'Meaning is invalid').isAlpha().isLength({min:1, max:30})
 	var errors = req.validationErrors()
 	if (!errors) {
 		var definition = {
@@ -146,50 +155,36 @@ app.post('/definitions', function (req, res, next) {
 		req.getConnection(function (error, conn) {
 			conn.query('INSERT INTO definition SET ?', definition, function (err, result) {
 				if (err) throw err
-			})
-			conn.query('SELECT * FROM definition ORDER BY word ASC', function (err, rows, fields) {
-				if (err) console.log(err)
-				console.log('Served Definitions with ', rows.length, ' rows')
-				if (err) throw err
-				res.render('definitions', {
-					definitions: rows,
-					word: '',
-					meaning: '',
-					notification: ['Added new definition'],
-				})
+				res.redirect('/dashboard/definition/?msg=' + 100)
 			})
 		})
 	} else {
-		console.log('ERROR:', errors)
+		var msg = encodeURIComponent(errors[0].msg)
+		res.redirect('/dashboard/definition/?msg=' + msg)
 	}
 })
 
 // Delete definition by id
 
 app.get('/definition/delete/(:definition_id)', function (req, res, next) {
-	req.getConnection(function (error, conn) {
-		conn.query('DELETE FROM definition WHERE definition_id = ' + req.params.definition_id, function (err, result) {
-			if (err) throw err
-			console.log('Definition deleted successfully! definition_id:', req.params.definition_id)
-		})
-		conn.query('SELECT * FROM definition ORDER BY word ASC', function (err, rows, fields) {
-			if (err) console.log(err)
-			console.log('Served Definitions with ', rows.length, ' rows')
-			if (err) throw err
-			res.render('definitions', {
-				definitions: rows,
-				word: '',
-				meaning: '',
-				notification: ['Deleted definition'],
+	req.checkParams('definition_id', 'student_id must be a number').isDecimal();
+	var errors = req.validationErrors()
+	if (!errors) {
+		req.getConnection(function (error, conn) {
+			conn.query('DELETE FROM definition WHERE definition_id = ' + req.params.definition_id, function (err, result) {
+				if (err) throw err
 			})
+			res.redirect('/dashboard/definition/?msg=' + 101)
 		})
-	})
+	} else {
+		var msg = encodeURIComponent(errors[0].msg)
+		res.redirect('/dashboard/definition/?msg=' + msg)
+	}
 })
 
 // -------------------- STARTGAME -------------------- //
 
 app.get('/startgame', function (req, res, next) {
-
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM student ORDER BY last_name ASC', function (err, rows, fields) {
 			if (err) {
@@ -197,7 +192,6 @@ app.get('/startgame', function (req, res, next) {
 				res.render('startgame', {
 					students: '',
 					definitions: '',
-					output: ''
 				})
 			} else {
 				var students = rows
@@ -208,25 +202,11 @@ app.get('/startgame', function (req, res, next) {
 						res.render('startgame', {
 							students: students,
 							definitions: '',
-							output: ''
 						})
 					} else {
 						res.render('startgame', {
 							students: students,
 							definitions: rows,
-							definition1: '',
-							definition2: '',
-							definition3: '',
-							definition4: '',
-							answer1: '',
-							answer2: '',
-							answer3: '',
-							answer4: '',
-							id1: '',
-							id2: '',
-							id3: '',
-							id4: '',
-							output: ''
 						})
 					}
 				})
@@ -258,13 +238,11 @@ app.post('/startgame', function (req, res, next) {
 					if (req.body.students.includes(rows[i].student_id.toString())) {
 						var target = 'student' + j
 						app.locals.toTable[target] = rows[i].first_name + ' ' + rows[i].last_name
-						console.log(app.locals.toTable)
 						app.locals.toTable['id'].push(rows[i].student_id)
 						j++
 					}
 				}
       })
-		console.log(app.locals.toTable)
 	})
 	res.render('ingame')
 })

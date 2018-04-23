@@ -15,8 +15,8 @@ app.get('/edit', function (req, res, next) {
 })
 
 app.post('/edit/(:student_id)', function (req, res, next) {
-  //req.checkParams('Invalid Student ID').isFloat()
-  //req.checkBody('score', 'A score is required').isFloat({ min: 0, max: 100 }) //Validate score
+  req.checkParams('student_id', 'student_id must be a number').isDecimal();
+  req.checkBody('score', 'score must be a number').isDecimal();
   var errors = req.validationErrors()
   if (!errors) {
     req.getConnection(function (error, conn) {
