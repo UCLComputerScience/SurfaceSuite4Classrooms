@@ -133,7 +133,7 @@ app.get('/definition', function (req, res, next) {
 
 app.post('/definition', function (req, res, next) {
 	req.assert('word', 'Word is invalid (<9 chars)').isAlpha().isLength({min:1, max:9})
-	req.assert('meaning', 'Meaning is invalid').isAlpha().isLength({min:1, max:30})
+	req.assert('meaning', 'Meaning is invalid').isAscii().isLength({min:1, max:30})
 	var errors = req.validationErrors()
 	if (!errors) {
 		var definition = {
