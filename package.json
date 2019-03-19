@@ -1,5 +1,5 @@
 {
-  "name": "Ss4c_api",
+  "name": "ss4c_api",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -23,14 +23,16 @@
     "method-override": "^2.3.10",
     "moment": "^2.22.0",
     "mysql": "^2.15.0",
+    "node-sqlite": "^0.0.2-security",
     "nodemon": "^1.17.3",
     "npm": "^5.8.0",
-    "sanitize": "^2.1.0"
+    "sanitize": "^2.1.0",
+    "sqlite3": "^4.0.6"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "nodemon app.js"
+    "start": "nodemon app.js"
   },
   "author": "Adam Peace | UCL",
-  "license": "UCL"
+  "license": "MIT"
 }
